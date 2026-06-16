@@ -1,0 +1,36 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local Matplotlib/WebAgg cache
+.mplconfig/
+
+# Test/type/coverage caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Generated simulator outputs from earlier experiments
+motion.html
+motion_dual.html
+workspace*.svg
+workspace*.csv
