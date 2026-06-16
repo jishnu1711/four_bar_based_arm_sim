@@ -1,6 +1,6 @@
 # Shoulder-Mounted Parallelogram Arm Simulator
 
-This project contains a simple 2D kinematic simulator for a 2-DOF planar arm
+This project contains simple 2D kinematic simulators for a 2-DOF planar arm
 with both actuators mounted at the shoulder/base.
 
 It only simulates the linkage motion up to the wrist. It does not model a
@@ -56,7 +56,7 @@ If `python3 -m venv .venv` fails because `venv` is missing, install it first:
 sudo apt install python3-venv
 ```
 
-## Run
+## Forward-Kinematics Simulator
 
 ```bash
 .venv/bin/python fourbar_leg_sim.py
@@ -74,7 +74,7 @@ whatever URL it prints.
 
 Stop the simulator with `Ctrl+C` in the terminal.
 
-## Controls
+### Controls
 
 The plot has:
 
@@ -90,9 +90,47 @@ The readout shows:
 - elbow position `E`
 - wrist position `W`
 
+## Inverse-Kinematics Simulator
+
+Run the coordinate-input simulator with:
+
+```bash
+.venv/bin/python fourbar_leg_ik.py
+```
+
+This simulator takes the desired wrist point `W = (X, Y)` as input and solves
+the two base-mounted motor angles:
+
+- shoulder motor angle
+- elbow motor rocker angle
+
+The plot has:
+
+- a `target W X` slider
+- a `target W Y` slider
+- a branch button to switch between the two possible IK solutions
+- a trace of accepted target positions
+
+If the requested point is unreachable, the red target marker still moves, but
+the linkage stays at the last valid pose and the readout explains why.
+
+The IK function to reuse later is:
+
+```python
+solve_inverse_kinematics(target_xy, branch="elbow_down")
+```
+
+The UI method to replace later with coordinate commands is:
+
+```python
+app.set_target_xy(x_mm, y_mm)
+```
+
 ## Geometry Knobs
 
-All dimensions and limits are near the top of `fourbar_leg_sim.py`:
+All dimensions and limits are near the top of `fourbar_leg_sim.py`. The IK
+script imports these values, so changing the geometry in one place updates both
+simulators.
 
 ```python
 UPPER_ARM_LENGTH = 145.0
